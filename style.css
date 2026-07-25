@@ -1,0 +1,239 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --column-bg: #1e293b80;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent: #38bdf8;
+    --accent-hover: #0284c7;
+    --danger: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    text-align: center;
+    padding: 25px 20px 10px;
+}
+
+.app-header h1 {
+    color: var(--accent);
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.app-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.board {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex: 1;
+    overflow-x: auto;
+    align-items: flex-start;
+}
+
+.column {
+    background-color: var(--column-bg);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 320px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    backdrop-filter: blur(8px);
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.column-header h2 {
+    font-size: 1.1rem;
+}
+
+.task-count {
+    background-color: #334155;
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.tasks-container {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 120px;
+    transition: background-color 0.2s ease;
+}
+
+.tasks-container.drag-over {
+    background-color: #33415540;
+    border-radius: 8px;
+}
+
+.task-card {
+    background-color: var(--card-bg);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    cursor: grab;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s;
+    position: relative;
+}
+
+.task-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.task-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+}
+
+.task-card h4 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.task-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.task-card:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    color: var(--danger);
+}
+
+.add-task-btn {
+    background: none;
+    border: none;
+    border-top: 1px solid #334155;
+    color: var(--accent);
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 0 12px 12px;
+    transition: background-color 0.2s;
+}
+
+.add-task-btn:hover {
+    background-color: #33415560;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal {
+    background-color: var(--card-bg);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal input, .modal textarea {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.modal input:focus, .modal textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary { background-color: var(--accent); color: var(--bg-color); }
+.btn-primary:hover { background-color: var(--accent-hover); }
+.btn-secondary { background-color: #334155; color: var(--text-primary); }
