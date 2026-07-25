@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المهام | Kanban Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1>📋 لوحة المهام (Kanban)</h1>
+        <p>اسحبي البطاقات ونقليها بين القوائم لإدارة مشاريعك</p>
+    </header>
+
+    <main class="board">
+        <div class="column" data-status="todo">
+            <div class="column-header">
+                <h2>📌 قيد الانتظار</h2>
+                <span class="task-count" id="count-todo">0</span>
+            </div>
+            <div class="tasks-container" id="todo"></div>
+            <button class="add-task-btn" onclick="openModal('todo')">+ إضافة مهمة</button>
+        </div>
+        <div class="column" data-status="in-progress">
+            <div class="column-header">
+                <h2>⚡ جاري العمل</h2>
+                <span class="task-count" id="count-in-progress">0</span>
+            </div>
+            <div class="tasks-container" id="in-progress"></div>
+            <button class="add-task-btn" onclick="openModal('in-progress')">+ إضافة مهمة</button>
+        </div>
+        <div class="column" data-status="done">
+            <div class="column-header">
+                <h2>✅ مكتملة</h2>
+                <span class="task-count" id="count-done">0</span>
+            </div>
+            <div class="tasks-container" id="done"></div>
+            <button class="add-task-btn" onclick="openModal('done')">+ إضافة مهمة</button>
+        </div>
+    </main>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3>إضافة مهمة جديدة</h3>
+            <input type="text" id="taskTitleInput" placeholder="عنوان المهمة..." autofocus>
+            <textarea id="taskDescInput" placeholder="تفاصيل إضافية (اختياري)..." rows="3"></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="addNewTask()">حفظ المهمة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
